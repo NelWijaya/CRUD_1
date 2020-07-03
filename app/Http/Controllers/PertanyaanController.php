@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\PertanyaanModel;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class PertanyaanController extends Controller
 {
@@ -18,6 +19,16 @@ class PertanyaanController extends Controller
         return view('new.pertanyaan_form');
     }
 
+    public function edit($id){
+        $new_data = PertanyaanModel::get_data($id);
+        return view('new.pertanyaan_edited', compact('new_data'));
+    }
+
+    public function edited($id, Request $request){
+        $new_data = PertanyaanModel::edit_data($id, $request->all());
+        return redirect('/pertanyaan');
+    }
+
     public function insert(Request $request){
         //dd($request->all());
         $data_insert = $request->all();
@@ -26,5 +37,11 @@ class PertanyaanController extends Controller
         if($send){
             return redirect('/pertanyaan');
         }
+    }
+
+    public function delete($id){
+        PertanyaanModel::delete_data($id);
+        PertanyaanModel::delete_jawaban($id);
+        return redirect('/pertanyaan');
     }
 }

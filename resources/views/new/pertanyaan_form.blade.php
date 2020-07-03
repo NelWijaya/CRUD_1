@@ -2,6 +2,10 @@
 
 
 @section('content')
+    <div class="col-sm-12 m-3">
+        <h1 class="m-0 text-dark">Insert Question</h1>
+    </div>
+
     <form action="/pertanyaan" method="POST" style="padding: 50px;">
         @csrf
         <div class="form-group">
